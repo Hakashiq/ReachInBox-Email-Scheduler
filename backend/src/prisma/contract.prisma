@@ -1,0 +1,73 @@
+// use prisma-next
+
+model User {
+  id        String   @id @default(uuid())
+  googleId  String   @unique
+  name      String
+  email     String   @unique
+  avatarUrl String
+  createdAt TimestamptzString @default(now())
+
+  senders           Sender[]
+  campaigns         Campaign[]
+  slackIntegrations SlackIntegration[]
+}
+
+model Sender {
+  id                String   @id @default(uuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  name              String
+  smtpUser          String
+  smtpPass          String
+  maxEmailsPerHour  Int?
+  createdAt         TimestamptzString @default(now())
+
+  campaigns         Campaign[]
+}
+
+model Campaign {
+  id                    String   @id @default(uuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id])
+  senderId              String
+  sender                Sender   @relation(fields: [senderId], references: [id])
+  subject               String
+  body                  String
+  startTime             TimestamptzString
+  delayBetweenEmailsSec Int
+  hourlyLimit           Int
+  createdAt             TimestamptzString @default(now())
+
+  emails                Email[]
+}
+
+enum EmailStatus {
+  scheduled
+  sent
+  failed
+}
+
+model Email {
+  id             String      @id @default(uuid())
+  campaignId     String
+  campaign       Campaign    @relation(fields: [campaignId], references: [id])
+  recipientEmail String
+  status         EmailStatus @default(scheduled)
+  scheduledTime  TimestamptzString
+  sentTime       TimestamptzString?
+  errorMessage   String?
+  retryCount     Int         @default(0)
+  createdAt      TimestamptzString @default(now())
+  updatedAt      temporal.updatedAtString()
+}
+
+model SlackIntegration {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  accessToken String
+  webhookUrl  String
+  connectedAt TimestamptzString @default(now())
+  isActive    Boolean  @default(true)
+}
