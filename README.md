@@ -161,7 +161,7 @@ GOOGLE_CALLBACK_URL=http://localhost:5000/auth/google/callback
 
 # Basic Authentication credentials for BullMQ Dashboard
 ADMIN_USER=admin
-ADMIN_PASS=12345678
+ADMIN_PASS=your-admin-password
 SESSION_SECRET=your-session-secret-key
 ```
 
