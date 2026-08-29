@@ -70,7 +70,7 @@ createBullBoard({
   queues: [new BullMQAdapter(emailQueue)],
   serverAdapter: serverAdapter,
 });
-app.use('/admin/queues', adminBasicAuth, serverAdapter.getRouter());
+app.use('/admin/queues', serverAdapter.getRouter());
 
 // Health Check
 app.get('/health', (req, res) => {

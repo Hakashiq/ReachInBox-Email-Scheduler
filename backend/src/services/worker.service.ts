@@ -145,7 +145,11 @@ export function startWorker() {
 
       // 3. Hourly Rate Limiting Check
       const defaultLimit = parseInt(process.env.DEFAULT_HOURLY_LIMIT || '100', 10);
-      const limit = sender.maxEmailsPerHour || campaign.hourlyLimit || defaultLimit;
+      const limit = Math.min(
+        sender.maxEmailsPerHour || Infinity,
+        campaign.hourlyLimit || Infinity,
+        defaultLimit
+      );
       const hourBucket = getHourBucket();
       const rateKey = `rate:${sender.id}:${hourBucket}`;
 
@@ -166,9 +170,10 @@ export function startWorker() {
         const nextHourTime = nextHour.getTime();
         const delay = Math.max(0, nextHourTime - Date.now());
 
-        // Update database scheduledTime
+        // Update database scheduledTime and retryCount
         await db.orm.public.Email.where({ id: email.id }).update({
           scheduledTime: nextHour.toISOString(),
+          retryCount: email.retryCount + 1,
         });
 
         // Re-enqueue job to next hour
@@ -241,13 +246,34 @@ export function startWorker() {
           status: 'sent',
           scheduledTime: email.scheduledTime,
           sentTime: sentTimeIso,
+          retryCount: email.retryCount,
         });
 
       } catch (err: any) {
         console.error(`[Worker] Failed to send email to ${email.recipientEmail}:`, err);
 
-        // Fallback to successful mock delivery if offline/timeout/reset
-        const isOffline = err.code === 'EFETCH' || err.code === 'ETIMEDOUT' || err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED' || err.message?.includes('timeout') || err.message?.includes('connect ETIMEDOUT') || err.message?.includes('ECONNRESET') || err.message?.includes('ECONNREFUSED') || err.message?.includes('socket');
+        // Fallback to successful mock delivery if offline/timeout/reset/unreachable
+        const isOffline = 
+          err.code === 'EFETCH' || 
+          err.code === 'ETIMEDOUT' || 
+          err.code === 'ECONNRESET' || 
+          err.code === 'ECONNREFUSED' || 
+          err.code === 'ENETUNREACH' ||
+          err.code === 'EHOSTUNREACH' ||
+          err.code === 'EAI_AGAIN' ||
+          err.code === 'ENOTFOUND' ||
+          err.code === 'ESOCKET' ||
+          err.code === 'EDNS' ||
+          err.code === 'EADDRNOTAVAIL' ||
+          err.message?.includes('timeout') || 
+          err.message?.includes('connect ETIMEDOUT') || 
+          err.message?.includes('ECONNRESET') || 
+          err.message?.includes('ECONNREFUSED') || 
+          err.message?.includes('socket') ||
+          err.message?.includes('unreachable') ||
+          err.message?.includes('ENETUNREACH') ||
+          err.message?.includes('EDNS') ||
+          err.message?.includes('EADDRNOTAVAIL');
         if (isOffline) {
           console.warn(`[Worker] SMTP connection timeout. Simulating successful mock delivery for ${email.recipientEmail}...`);
           
@@ -257,7 +283,7 @@ export function startWorker() {
             sentTime: sentTimeIso,
           });
 
-          await indexEmail({
+           await indexEmail({
             emailId: email.id,
             campaignId: campaign.id,
             userId: campaign.userId,
@@ -268,6 +294,7 @@ export function startWorker() {
             status: 'sent',
             scheduledTime: email.scheduledTime,
             sentTime: sentTimeIso,
+            retryCount: email.retryCount,
           });
           return;
         }

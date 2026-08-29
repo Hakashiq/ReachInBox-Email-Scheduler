@@ -13,6 +13,7 @@ interface EmailLog {
   sentTime?: string | null;
   subject?: string;
   bodySnippet?: string;
+  retryCount?: number;
 }
 
 interface ScheduledProps {
@@ -166,7 +167,11 @@ export const Scheduled: React.FC<ScheduledProps> = ({ user, setUser }) => {
                     </div>
                     
                     <div className="w-60 shrink-0 flex items-center">
-                      <div className="bg-badge-green text-badge-green-text px-3 py-1 rounded-full flex items-center gap-1">
+                      <div className={`px-3 py-1 rounded-full flex items-center gap-1 ${
+                        email.retryCount && email.retryCount > 0
+                          ? 'bg-[#FEF08A] text-[#854D0E] border border-[#FACC15]'
+                          : 'bg-badge-green text-badge-green-text'
+                      }`}>
                         <span className="material-symbols-outlined text-[14px]">schedule</span>
                         <span className="font-label-sm text-label-sm">
                           {formatTime(email.scheduledTime)}
@@ -178,8 +183,10 @@ export const Scheduled: React.FC<ScheduledProps> = ({ user, setUser }) => {
                       <span className="font-headline-md text-headline-md text-on-surface truncate">
                         {email.subject || 'No Subject'}
                       </span>
-                      <span className="text-on-surface-variant font-body-sm text-body-sm shrink-0">
-                        - Scheduled -
+                      <span className={`font-body-sm text-body-sm shrink-0 ${
+                        email.retryCount && email.retryCount > 0 ? 'text-[#854D0E] font-medium' : 'text-on-surface-variant'
+                      }`}>
+                        {email.retryCount && email.retryCount > 0 ? '- Rescheduled (Rate Limit) -' : '- Scheduled -'}
                       </span>
                       <span className="font-body-sm text-body-sm text-on-surface-variant truncate">
                         {email.bodySnippet || 'No preview available...'}

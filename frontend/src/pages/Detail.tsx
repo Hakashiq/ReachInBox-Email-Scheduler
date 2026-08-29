@@ -15,6 +15,7 @@ interface EmailDetail {
   subject?: string;
   body?: string;
   senderName?: string;
+  retryCount?: number;
 }
 
 interface DetailProps {
@@ -63,6 +64,7 @@ export const Detail: React.FC<DetailProps> = ({ user, setUser }) => {
           subject: found.subject,
           body: found.body || '<i>(No content body)</i>',
           senderName: found.senderName || 'Sender Profile',
+          retryCount: found.retryCount,
         });
       } else {
         console.error('Email log not found for ID:', id);
@@ -169,9 +171,13 @@ export const Detail: React.FC<DetailProps> = ({ user, setUser }) => {
                       ? 'bg-green-100 text-green-800' 
                       : email.status === 'failed'
                       ? 'bg-red-100 text-red-800'
+                      : email.retryCount && email.retryCount > 0
+                      ? 'bg-[#FEF08A] text-[#854D0E] border border-[#FACC15]'
                       : 'bg-blue-100 text-blue-800'
                   }`}>
-                    {email.status}
+                    {email.status === 'scheduled' && email.retryCount && email.retryCount > 0
+                      ? 'rescheduled (rate limit)'
+                      : email.status}
                   </span>
                 </div>
               </div>

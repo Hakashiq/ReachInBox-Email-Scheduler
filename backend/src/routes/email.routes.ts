@@ -20,7 +20,7 @@ router.get('/senders', ensureAuthenticated, async (req: any, res) => {
         name: 'Default Ethereal Sender',
         smtpUser: 'mock-ethereal-user@ethereal.email',
         smtpPass: 'mock-ethereal-password',
-        maxEmailsPerHour: 50, // Default hourly rate limit
+        maxEmailsPerHour: parseInt(process.env.DEFAULT_HOURLY_LIMIT || '50', 10),
       });
       senders = [defaultSender];
       console.log(`[Email] Created default Ethereal sender for user ${userId}`);
@@ -70,8 +70,9 @@ router.post('/schedule', ensureAuthenticated, async (req: any, res) => {
     }
 
     const parsedDelay = parseInt(delayBetweenEmailsSec || '0', 10);
-    const defaultLimit = process.env.DEFAULT_HOURLY_LIMIT || '100';
-    const parsedLimit = parseInt(hourlyLimit || defaultLimit, 10);
+    const defaultLimitVal = parseInt(process.env.DEFAULT_HOURLY_LIMIT || '100', 10);
+    const userLimit = parseInt(hourlyLimit || String(defaultLimitVal), 10);
+    const parsedLimit = Math.min(userLimit, defaultLimitVal);
     const startTimestamp = startTime ? new Date(startTime).getTime() : Date.now();
 
     // Verify sender belongs to user

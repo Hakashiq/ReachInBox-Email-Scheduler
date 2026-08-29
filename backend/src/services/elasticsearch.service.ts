@@ -67,6 +67,7 @@ interface IndexEmailParams {
   status: string;
   scheduledTime: string;
   sentTime?: string | null;
+  retryCount?: number;
 }
 
 // Index or Update Email logs in ES
@@ -86,6 +87,7 @@ export async function indexEmail(data: IndexEmailParams) {
         status: data.status,
         scheduled_time: new Date(data.scheduledTime).toISOString(),
         sent_time: data.sentTime ? new Date(data.sentTime).toISOString() : null,
+        retry_count: data.retryCount || 0,
       },
       refresh: true, // Force immediate searchability (critical for real-time validation & tests)
     });

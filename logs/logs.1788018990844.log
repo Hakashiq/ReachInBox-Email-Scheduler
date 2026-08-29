@@ -1,0 +1,221 @@
+2026-08-29T15:06:47.621448893Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:47.621451653Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:47.621454353Z [err]            ^
+2026-08-29T15:06:47.621457153Z [err]  
+2026-08-29T15:06:47.621459863Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:47.621462583Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:47.621470833Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:47.621473413Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:47.621476153Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:47.621478863Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:47.621481473Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:47.621483923Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:47.621486503Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:47.621490403Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:47.621494063Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:47.621497852Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:47.621501422Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:47.621505052Z [err]  }
+2026-08-29T15:06:47.621508442Z [err]  
+2026-08-29T15:06:47.621512012Z [err]  Node.js v24.19.0
+2026-08-29T15:06:47.908220891Z [inf]  Starting Container
+2026-08-29T15:06:48.131835540Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:48.131838890Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:48.131843090Z [err]            ^
+2026-08-29T15:06:48.131846670Z [err]  
+2026-08-29T15:06:48.131850600Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:48.131853980Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:48.131857290Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:48.131860590Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:48.131863980Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:48.131867170Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:48.131871260Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:48.131875040Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:48.131878349Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:48.131882089Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:48.131885969Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:48.131889319Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:48.131892469Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:48.131895829Z [err]  }
+2026-08-29T15:06:48.131899339Z [err]  
+2026-08-29T15:06:48.131902549Z [err]  Node.js v24.19.0
+2026-08-29T15:06:49.053243062Z [err]  
+2026-08-29T15:06:49.053248962Z [err]  Node.js v24.19.0
+2026-08-29T15:06:49.053258521Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:49.053261701Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:49.053270871Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:49.053271051Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:49.053278701Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:49.053285181Z [err]            ^
+2026-08-29T15:06:49.053287481Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:49.053288681Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:49.053288791Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:49.053295301Z [err]  
+2026-08-29T15:06:49.053300401Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:49.053319741Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:49.053319861Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:49.053332290Z [err]  }
+2026-08-29T15:06:49.053334500Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:49.053340600Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:49.053345640Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:49.053352410Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:49.877973450Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:49.877979000Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:49.877987340Z [err]            ^
+2026-08-29T15:06:49.877993140Z [err]  
+2026-08-29T15:06:49.877997560Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:49.878001900Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:49.878006120Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:49.878010750Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:49.878016140Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:49.878021909Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:49.878026189Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:49.878031009Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:49.878035309Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:49.878039189Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:49.878043459Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:49.878049679Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:49.878053899Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:49.878057839Z [err]  }
+2026-08-29T15:06:49.878061899Z [err]  
+2026-08-29T15:06:49.878066499Z [err]  Node.js v24.19.0
+2026-08-29T15:06:50.668059785Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:50.668072005Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:50.668076485Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:50.668080975Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:50.668085385Z [err]  }
+2026-08-29T15:06:50.668090655Z [err]  
+2026-08-29T15:06:50.668095215Z [err]  Node.js v24.19.0
+2026-08-29T15:06:50.668109595Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:50.668112675Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:50.668115395Z [err]            ^
+2026-08-29T15:06:50.668118655Z [err]  
+2026-08-29T15:06:50.668122105Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:50.668125714Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:50.668129764Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:50.668133124Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:50.668136824Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:50.668140824Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:50.668144924Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:50.668148234Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:50.668151614Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:51.282663234Z [err]  }
+2026-08-29T15:06:51.282669414Z [err]  
+2026-08-29T15:06:51.282675344Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:51.282683754Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:51.282688364Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:51.282694734Z [err]  Node.js v24.19.0
+2026-08-29T15:06:51.282697214Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:51.282705194Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:51.282705464Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:51.282710044Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:51.282714524Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:51.282719784Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:51.282722444Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:51.282725224Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:51.282732653Z [err]            ^
+2026-08-29T15:06:51.282732843Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:51.282739953Z [err]  
+2026-08-29T15:06:51.282744123Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:51.282750983Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:51.282754453Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:52.004537349Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:52.004539048Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:52.004544358Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:52.004551178Z [err]            ^
+2026-08-29T15:06:52.004553418Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:52.004559958Z [err]  
+2026-08-29T15:06:52.004561998Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:52.004568588Z [err]  }
+2026-08-29T15:06:52.004573178Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:52.004575248Z [err]  
+2026-08-29T15:06:52.004582658Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:52.004583798Z [err]  Node.js v24.19.0
+2026-08-29T15:06:52.004589698Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:52.004594238Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:52.004598378Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:52.004603217Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:52.004607677Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:52.004612067Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:52.004615687Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:52.004619477Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:52.729301275Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:52.729314705Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:52.729319485Z [err]            ^
+2026-08-29T15:06:52.729323335Z [err]  
+2026-08-29T15:06:52.729328005Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:52.729332175Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:52.729336575Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:52.729340295Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:52.729344625Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:52.729349584Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:52.729353704Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:52.729357534Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:52.729360954Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:52.729364744Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:52.729368754Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:52.729373164Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:52.729377194Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:52.729380774Z [err]  }
+2026-08-29T15:06:52.729384784Z [err]  
+2026-08-29T15:06:52.729388584Z [err]  Node.js v24.19.0
+2026-08-29T15:06:53.471548220Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:53.471558020Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:53.471562120Z [err]            ^
+2026-08-29T15:06:53.471566800Z [err]  
+2026-08-29T15:06:53.471570480Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:53.471573810Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:53.471579130Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:53.471582920Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:53.471586819Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:53.471590039Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:53.471593349Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:53.471596489Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:53.471599579Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:53.471602879Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:53.471606389Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:53.471612309Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:53.471616079Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:53.471619429Z [err]  }
+2026-08-29T15:06:53.471623609Z [err]  
+2026-08-29T15:06:53.471627159Z [err]  Node.js v24.19.0
+2026-08-29T15:06:54.227744062Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:54.227749202Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:54.227752332Z [err]            ^
+2026-08-29T15:06:54.227755832Z [err]  
+2026-08-29T15:06:54.227758412Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:54.227761022Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:54.227763982Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:54.227767422Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:54.227770501Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:54.227773941Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:54.227776621Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:54.227779141Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:54.227781621Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+2026-08-29T15:06:54.227784171Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:54.227787231Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:54.227790051Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:54.227793011Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:54.227795891Z [err]  }
+2026-08-29T15:06:54.227798691Z [err]  
+2026-08-29T15:06:54.227801701Z [err]  Node.js v24.19.0
+2026-08-29T15:06:54.862802022Z [err]      at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+2026-08-29T15:06:54.862808891Z [err]      at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+2026-08-29T15:06:54.862813161Z [err]    code: 'ERR_MODULE_NOT_FOUND',
+2026-08-29T15:06:54.862821881Z [err]    url: 'file:///app/dist/config/passport'
+2026-08-29T15:06:54.862824781Z [err]  }
+2026-08-29T15:06:54.862828351Z [err]  
+2026-08-29T15:06:54.862832061Z [err]  Node.js v24.19.0
+2026-08-29T15:06:54.862839821Z [err]  node:internal/modules/esm/resolve:271
+2026-08-29T15:06:54.862843181Z [err]      throw new ERR_MODULE_NOT_FOUND(
+2026-08-29T15:06:54.862846271Z [err]            ^
+2026-08-29T15:06:54.862849001Z [err]  
+2026-08-29T15:06:54.862851491Z [err]  Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/app/dist/config/passport' imported from /app/dist/index.js
+2026-08-29T15:06:54.862854591Z [err]      at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+2026-08-29T15:06:54.862858111Z [err]      at moduleResolve (node:internal/modules/esm/resolve:865:10)
+2026-08-29T15:06:54.862860851Z [err]      at defaultResolve (node:internal/modules/esm/resolve:992:11)
+2026-08-29T15:06:54.862863361Z [err]      at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+2026-08-29T15:06:54.862866101Z [err]      at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+2026-08-29T15:06:54.862868980Z [err]      at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+2026-08-29T15:06:54.862873210Z [err]      at #resolve (node:internal/modules/esm/loader:683:17)
+2026-08-29T15:06:54.862876070Z [err]      at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
