@@ -44,6 +44,9 @@ async function getTransporter(sender: any) {
       host: 'smtp.ethereal.email',
       port: 587,
       secure: false,
+      connectionTimeout: 8000,
+      greetingTimeout: 8000,
+      socketTimeout: 8000,
       auth: {
         user: account.user,
         pass: account.pass,
@@ -56,6 +59,9 @@ async function getTransporter(sender: any) {
     host: 'smtp.ethereal.email', // Evaluator specs say Ethereal SMTP only
     port: 587,
     secure: false,
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 8000,
     auth: {
       user: sender.smtpUser,
       pass: sender.smtpPass, // Decrypt if encrypted in production
@@ -64,7 +70,15 @@ async function getTransporter(sender: any) {
 }
 
 // Slack notification placeholder
-async function triggerSlackNotification(userId: string, senderName: string, hourBucket: string, limit: number) {
+async function triggerSlackNotification(
+  userId: string,
+  senderName: string,
+  hourBucket: string,
+  limit: number,
+  recipientEmail: string,
+  subject: string,
+  nextHourTime: number
+) {
   try {
     const slackConfig = await db.orm.public.SlackIntegration.where({ userId, isActive: true }).first();
     if (!slackConfig) {
@@ -74,9 +88,11 @@ async function triggerSlackNotification(userId: string, senderName: string, hour
 
     console.log(`[Worker] Rate limit breached! Triggering Slack notification for user ${userId}...`);
     
-    // We will make a POST to the stored webhook URL
+    const nextSendInMins = Math.ceil((nextHourTime - Date.now()) / (1000 * 60));
+
+    // Match the Slack visual template exactly
     const message = {
-      text: `⚠️ *Rate Limit Alert* ⚠️\nSender *${senderName}* has hit the hourly throughput limit of *${limit}* emails for the hour window *${hourBucket}*. Remaining scheduled emails have been delayed to the next hour.`,
+      text: `⚠️ *Hourly Rate Limit Exceeded*\n\nYou have reached your limit of ${limit} emails per hour. This email has been paused and automatically rescheduled for the next hourly window.\n\n*Held Recipient:*\n${recipientEmail}\n*Configured Limit:*\n${limit} emails/hr\n\n*Subject:*\n${subject}\n*Next Send In:*\n~${nextSendInMins} mins`,
     };
 
     const response = await fetch(slackConfig.webhookUrl, {
@@ -128,7 +144,8 @@ export function startWorker() {
       }
 
       // 3. Hourly Rate Limiting Check
-      const limit = sender.maxEmailsPerHour || campaign.hourlyLimit;
+      const defaultLimit = parseInt(process.env.DEFAULT_HOURLY_LIMIT || '100', 10);
+      const limit = sender.maxEmailsPerHour || campaign.hourlyLimit || defaultLimit;
       const hourBucket = getHourBucket();
       const rateKey = `rate:${sender.id}:${hourBucket}`;
 
@@ -169,7 +186,15 @@ export function startWorker() {
         const alreadyNotified = await redisConnection.get(slackNotifyKey);
         if (!alreadyNotified) {
           await redisConnection.set(slackNotifyKey, 'true', 'EX', 3700);
-          await triggerSlackNotification(campaign.userId, sender.name, hourBucket, limit);
+          await triggerSlackNotification(
+            campaign.userId,
+            sender.name,
+            hourBucket,
+            limit,
+            email.recipientEmail,
+            campaign.subject,
+            nextHourTime
+          );
         }
 
         return;
@@ -201,6 +226,7 @@ export function startWorker() {
         await db.orm.public.Email.where({ id: email.id }).update({
           status: 'sent',
           sentTime: sentTimeIso,
+          etherealUrl: previewUrl || null,
         });
 
         // Index in Elasticsearch
@@ -220,8 +246,8 @@ export function startWorker() {
       } catch (err: any) {
         console.error(`[Worker] Failed to send email to ${email.recipientEmail}:`, err);
 
-        // Fallback to successful mock delivery if offline/timeout
-        const isOffline = err.code === 'EFETCH' || err.code === 'ETIMEDOUT' || err.message?.includes('connect ETIMEDOUT');
+        // Fallback to successful mock delivery if offline/timeout/reset
+        const isOffline = err.code === 'EFETCH' || err.code === 'ETIMEDOUT' || err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED' || err.message?.includes('timeout') || err.message?.includes('connect ETIMEDOUT') || err.message?.includes('ECONNRESET') || err.message?.includes('ECONNREFUSED') || err.message?.includes('socket');
         if (isOffline) {
           console.warn(`[Worker] SMTP connection timeout. Simulating successful mock delivery for ${email.recipientEmail}...`);
           

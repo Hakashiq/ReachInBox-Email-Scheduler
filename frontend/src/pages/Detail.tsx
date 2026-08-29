@@ -11,6 +11,7 @@ interface EmailDetail {
   scheduledTime: string;
   sentTime?: string | null;
   errorMessage?: string | null;
+  etherealUrl?: string | null;
   subject?: string;
   body?: string;
   senderName?: string;
@@ -58,6 +59,7 @@ export const Detail: React.FC<DetailProps> = ({ user, setUser }) => {
           scheduledTime: found.scheduledTime,
           sentTime: found.sentTime,
           errorMessage: found.errorMessage,
+          etherealUrl: found.etherealUrl,
           subject: found.subject,
           body: found.body || '<i>(No content body)</i>',
           senderName: found.senderName || 'Sender Profile',
@@ -151,6 +153,17 @@ export const Detail: React.FC<DetailProps> = ({ user, setUser }) => {
                   </h1>
                 </div>
                 <div className="flex items-center gap-space-sm text-on-surface-variant">
+                  {email.etherealUrl && (
+                    <a 
+                      href={email.etherealUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors uppercase tracking-wide mr-2"
+                    >
+                      <span className="material-symbols-outlined text-[14px]">visibility</span>
+                      Ethereal Preview
+                    </a>
+                  )}
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase ${
                     email.status === 'sent' 
                       ? 'bg-green-100 text-green-800' 
@@ -203,22 +216,6 @@ export const Detail: React.FC<DetailProps> = ({ user, setUser }) => {
                 dangerouslySetInnerHTML={{ __html: email.body || '' }}
               />
 
-              {/* Mock Attachments List matching the Design Template */}
-              <div className="px-space-lg pb-space-lg pt-space-lg border-t border-outline-variant flex flex-wrap gap-space-md mt-auto">
-                <div className="w-[200px] border border-outline-variant rounded-lg overflow-hidden flex flex-col bg-surface hover:shadow-sm transition-shadow cursor-pointer">
-                  <div className="h-[120px] bg-surface-container-low w-full relative overflow-hidden">
-                    <img 
-                      alt="Attachment Preview" 
-                      className="w-full h-full object-cover" 
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwRruAKHkznIqUzVuW63mrlv7XzqmehaT7Z9tVp5tk62ZIvDnzyEmpV0gGBDkAKybOrDFKdZDMcLEgIc9WgJIFkVb8ygN6PftggzPlASSSxQW59yw6_-e85MQWEZ36ImPm5Sc-qpqc7DVjdLdG_NPqSTSX1Fvvmwhrbu5R9ghvdJFt10yES0vz4Nd6xORAlk4iE5qYDtl3f2ZCftfKvnyL1NbeugyFhCvs6_yFVG-ZiPg7r8vE4wHhVn0knLPOiFgbQg4"
-                    />
-                  </div>
-                  <div className="p-space-sm bg-surface flex flex-col gap-1 border-t border-outline-variant">
-                    <span className="font-label-md text-label-md text-on-surface truncate">Tennis_Coach_Profile.png</span>
-                    <span className="font-meta-data text-meta-data text-on-surface-variant">1.2 MB</span>
-                  </div>
-                </div>
-              </div>
             </article>
           )}
         </main>

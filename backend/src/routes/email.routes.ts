@@ -70,7 +70,8 @@ router.post('/schedule', ensureAuthenticated, async (req: any, res) => {
     }
 
     const parsedDelay = parseInt(delayBetweenEmailsSec || '0', 10);
-    const parsedLimit = parseInt(hourlyLimit || '100', 10);
+    const defaultLimit = process.env.DEFAULT_HOURLY_LIMIT || '100';
+    const parsedLimit = parseInt(hourlyLimit || defaultLimit, 10);
     const startTimestamp = startTime ? new Date(startTime).getTime() : Date.now();
 
     // Verify sender belongs to user
@@ -138,6 +139,37 @@ router.post('/schedule', ensureAuthenticated, async (req: any, res) => {
       });
 
       scheduledEmails.push(emailRecord);
+    }
+    // Try to trigger Slack notification for campaign schedule (To match design template)
+    try {
+      const slackConfig = await db.orm.public.SlackIntegration.where({ userId, isActive: true }).first();
+      if (slackConfig && slackConfig.webhookUrl) {
+        const leadToShow = scheduledEmails[0];
+        if (leadToShow) {
+          const dateObj = new Date(leadToShow.scheduledTime);
+          const formattedDate = dateObj.toLocaleString('en-GB', {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true,
+          }).toLowerCase();
+
+          const slackMsg = {
+            text: `📅 *Email Scheduled*\n\n*To:*\n${leadToShow.recipientEmail}\n*Scheduled For:*\n${formattedDate}\n\n*Subject:*\n${subject}\n*Status:*\nSCHEDULED`
+          };
+
+          await fetch(slackConfig.webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(slackMsg),
+          });
+        }
+      }
+    } catch (slackErr) {
+      console.error('[Email] Failed to send Slack schedule notification:', slackErr);
     }
 
     return res.json({

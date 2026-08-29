@@ -13,9 +13,8 @@ router.get('/google', (req, res, next) => {
   if (clientID && clientSecret) {
     return passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
   } else {
-    // Redirect to mock authentication
-    console.log('[Auth] Google credentials missing. Redirecting to Mock Auth.');
-    return res.redirect('/auth/mock-login');
+    console.error('[Auth] Google Client credentials missing in backend .env.');
+    return res.status(501).send('Google OAuth is not configured on this server. Please define GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in your backend .env file.');
   }
 });
 
@@ -55,7 +54,44 @@ router.get('/mock-login', async (req, res, next) => {
         return next(err);
       }
       console.log(`[Auth] Logged in as mock user: ${mockEmail}`);
-      return res.redirect(`${FRONTEND_URL}/dashboard`);
+      return res.redirect(`${FRONTEND_URL}/scheduled`);
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// Mock POST login (Email Form on login screen)
+router.post('/mock-login', async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ error: 'Email ID is required' });
+    }
+
+    const isSystemAdmin = email.trim().toLowerCase() === 'admin@reachinbox.com' || email.trim().toLowerCase() === 'admin';
+    const userEmail = isSystemAdmin ? 'admin@reachinbox.com' : email.trim().toLowerCase();
+    const userName = isSystemAdmin ? 'System Administrator' : userEmail.split('@')[0];
+    const googleId = isSystemAdmin ? 'system-admin-google-id-999' : `mock-id-${userEmail}`;
+    const avatarUrl = `https://api.dicebear.com/7.x/bottts/svg?seed=${userEmail}`;
+
+    let user = await db.orm.public.User.where({ email: userEmail }).first();
+    if (!user) {
+      user = await db.orm.public.User.create({
+        googleId,
+        name: userName,
+        email: userEmail,
+        avatarUrl,
+      });
+      console.log(`[Auth] Created user profile: ${userEmail}`);
+    }
+
+    req.login(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      console.log(`[Auth] Logged in as: ${userEmail}`);
+      return res.json({ success: true, user });
     });
   } catch (err) {
     next(err);
@@ -65,7 +101,18 @@ router.get('/mock-login', async (req, res, next) => {
 // 4. Get Current Logged In User
 router.get('/me', (req, res) => {
   if (req.isAuthenticated && req.isAuthenticated()) {
-    return res.json({ user: req.user });
+    const userObj = req.user as any;
+    const isAdmin = userObj.email === 'admin@reachinbox.com';
+    return res.json({
+      user: {
+        id: userObj.id,
+        googleId: userObj.googleId,
+        name: userObj.name,
+        email: userObj.email,
+        avatarUrl: userObj.avatarUrl,
+        isAdmin,
+      }
+    });
   }
   return res.status(401).json({ error: 'Not authenticated' });
 });

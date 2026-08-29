@@ -6,7 +6,6 @@ import { Sent } from './pages/Sent';
 import { Detail } from './pages/Detail';
 import { Compose } from './pages/Compose';
 import { Senders } from './pages/Senders';
-import { Slack } from './pages/Slack';
 
 function App() {
   const [user, setUser] = useState<any>(null);
@@ -42,12 +41,6 @@ function App() {
         <Route 
           path="/senders" 
           element={<Senders user={user} setUser={setUser} />} 
-        />
-
-        {/* Slack Integration Panel */}
-        <Route 
-          path="/slack" 
-          element={<Slack user={user} setUser={setUser} />} 
         />
 
         {/* Default Fallback */}

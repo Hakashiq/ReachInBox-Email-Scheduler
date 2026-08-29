@@ -355,6 +355,12 @@ export const Compose: React.FC = () => {
                 >
                   Close
                 </button>
+                <button 
+                  onClick={() => setPanelOpen(false)}
+                  className="font-label-md text-label-md bg-primary-container text-white border border-primary hover:bg-[#009650] px-4 py-2 rounded transition-colors"
+                >
+                  OK
+                </button>
               </div>
             </aside>
           )}

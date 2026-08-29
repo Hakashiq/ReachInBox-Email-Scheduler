@@ -57,6 +57,7 @@ model Email {
   scheduledTime  TimestamptzString
   sentTime       TimestamptzString?
   errorMessage   String?
+  etherealUrl    String?
   retryCount     Int         @default(0)
   createdAt      TimestamptzString @default(now())
   updatedAt      temporal.updatedAtString()

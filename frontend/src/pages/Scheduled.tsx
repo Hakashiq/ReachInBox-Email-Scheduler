@@ -104,9 +104,10 @@ export const Scheduled: React.FC<ScheduledProps> = ({ user, setUser }) => {
       const date = new Date(isoString);
       return date.toLocaleString('en-US', {
         weekday: 'short',
+        month: 'short',
+        day: 'numeric',
         hour: 'numeric',
         minute: '2-digit',
-        second: '2-digit',
         hour12: true,
       });
     } catch (e) {
@@ -164,7 +165,7 @@ export const Scheduled: React.FC<ScheduledProps> = ({ user, setUser }) => {
                       </span>
                     </div>
                     
-                    <div className="w-48 shrink-0 flex items-center">
+                    <div className="w-60 shrink-0 flex items-center">
                       <div className="bg-badge-green text-badge-green-text px-3 py-1 rounded-full flex items-center gap-1">
                         <span className="material-symbols-outlined text-[14px]">schedule</span>
                         <span className="font-label-sm text-label-sm">

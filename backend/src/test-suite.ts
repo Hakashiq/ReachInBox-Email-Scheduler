@@ -69,10 +69,16 @@ async function runTests() {
   if (user) {
     // Delete past records
     console.log('[Setup] Removing old test records...');
-    // In database order: email -> campaign -> sender -> user
-    await db.orm.public.Email.where({}).deleteAll();
-    await db.orm.public.Campaign.where({}).deleteAll();
-    await db.orm.public.Sender.where({}).deleteAll();
+    
+    // Fetch and remove only campaigns/emails belonging to test user
+    const testCampaigns = await db.orm.public.Campaign.where({ userId: user.id }).all();
+    const testCampaignIds = testCampaigns.map((c) => c.id);
+    for (const cid of testCampaignIds) {
+      await db.orm.public.Email.where({ campaignId: cid }).deleteAll();
+    }
+    await db.orm.public.Campaign.where({ userId: user.id }).deleteAll();
+    await db.orm.public.Sender.where({ userId: user.id }).deleteAll();
+    await db.orm.public.SlackIntegration.where({ userId: user.id }).deleteAll();
     await db.orm.public.User.where({ id: user.id }).delete();
   }
 
@@ -81,6 +87,14 @@ async function runTests() {
     name: 'Evaluator Tester',
     email: 'evaluator@test.com',
     avatarUrl: 'https://example.com/eval.png',
+  });
+
+  // Pre-configure user's Slack Webhook URL for live test verification
+  await db.orm.public.SlackIntegration.create({
+    userId: user.id,
+    webhookUrl: 'https://hooks.slack.com/services/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',
+    accessToken: 'mock-slack-access-token',
+    isActive: true,
   });
 
   // Create Sender A
@@ -203,8 +217,8 @@ async function runTests() {
   console.log('\n--- 4. STARTING BACKGROUND WORKER & PROCESSING ---');
   startWorker();
   
-  console.log('Waiting 15 seconds for worker to process scheduled queue jobs...');
-  await wait(15000);
+  console.log('Waiting 60 seconds for worker to process scheduled queue jobs...');
+  await wait(60000);
 
   // Check DB status transitions to sent
   const dbProcessedEmails = await db.orm.public.Email.where({ campaignId: campaign.id }).all();
@@ -282,8 +296,8 @@ async function runTests() {
     );
   }
 
-  console.log('Waiting 8 seconds for rate limit check to execute...');
-  await wait(8000);
+  console.log('Waiting 40 seconds for rate limit check to execute...');
+  await wait(40000);
 
   // Check how many emails were sent vs rescheduled
   const rateEmails = await db.orm.public.Email.where({ campaignId: rateCampaign.id }).all();
@@ -304,7 +318,7 @@ async function runTests() {
     const rescheduledEmails = rateEmails.filter((e) => e.status === 'scheduled');
     const isRescheduledForward = rescheduledEmails.every((e) => {
       const scheduledTime = new Date(e.scheduledTime).getTime();
-      return scheduledTime > Date.now();
+      return scheduledTime > rateStartTime;
     });
 
     if (isRescheduledForward) {

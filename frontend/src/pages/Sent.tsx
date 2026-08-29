@@ -12,6 +12,7 @@ interface EmailLog {
   scheduledTime: string;
   sentTime?: string | null;
   errorMessage?: string | null;
+  etherealUrl?: string | null;
   subject?: string;
   bodySnippet?: string;
 }
@@ -163,7 +164,7 @@ export const Sent: React.FC<SentProps> = ({ user, setUser }) => {
                         </div>
 
                         {/* Status Badge */}
-                        <div className="shrink-0">
+                        <div className="shrink-0 flex items-center gap-2">
                           {email.status === 'failed' ? (
                             <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-red-100 text-red-800 uppercase tracking-wide" title={email.errorMessage || ''}>
                               Failed
@@ -172,6 +173,19 @@ export const Sent: React.FC<SentProps> = ({ user, setUser }) => {
                             <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-surface-container text-on-surface-variant uppercase tracking-wide">
                               Sent
                             </span>
+                          )}
+
+                          {email.etherealUrl && (
+                            <a 
+                              href={email.etherealUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[10px] font-medium bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors uppercase tracking-wide"
+                            >
+                              <span className="material-symbols-outlined text-[12px]">visibility</span>
+                              Ethereal Inbox
+                            </a>
                           )}
                         </div>
 

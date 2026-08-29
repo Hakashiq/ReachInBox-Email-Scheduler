@@ -13,6 +13,7 @@ import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { ExpressAdapter } from '@bull-board/express';
 import { emailQueue } from './services/queue.service';
+import { adminBasicAuth } from './middleware/auth.middleware';
 
 dotenv.config();
 
@@ -69,7 +70,7 @@ createBullBoard({
   queues: [new BullMQAdapter(emailQueue)],
   serverAdapter: serverAdapter,
 });
-app.use('/admin/queues', serverAdapter.getRouter());
+app.use('/admin/queues', adminBasicAuth, serverAdapter.getRouter());
 
 // Health Check
 app.get('/health', (req, res) => {
