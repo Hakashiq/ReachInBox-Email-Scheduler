@@ -24,7 +24,7 @@ router.get(
   passport.authenticate('google', { failureRedirect: `${FRONTEND_URL}/login?error=oauth_failed` }),
   (req, res) => {
     // Successful authentication, redirect home/dashboard
-    res.redirect(`${FRONTEND_URL}/dashboard`);
+    res.redirect(`${FRONTEND_URL}/scheduled`);
   }
 );
 
