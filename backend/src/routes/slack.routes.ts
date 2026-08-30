@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { db } from '../prisma/db';
-import { ensureAuthenticated } from '../middleware/auth.middleware';
+import { db } from '../prisma/db.js';
+import { ensureAuthenticated } from '../middleware/auth.middleware.js';
 
 const router = Router();
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';

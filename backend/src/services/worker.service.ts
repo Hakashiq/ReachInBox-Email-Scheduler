@@ -1,8 +1,8 @@
 import { Worker } from 'bullmq';
 import nodemailer from 'nodemailer';
-import { redisConnection, emailQueue } from './queue.service';
-import { db } from '../prisma/db';
-import { indexEmail } from './elasticsearch.service';
+import { redisConnection, emailQueue } from './queue.service.js';
+import { db } from '../prisma/db.js';
+import { indexEmail } from './elasticsearch.service.js';
 
 const CONCURRENCY = parseInt(process.env.QUEUE_CONCURRENCY || '5', 10);
 
@@ -165,8 +165,8 @@ export function startWorker() {
 
         // Calculate next hour delay
         const nextHour = new Date();
-        nextHour.setUTCHours(nextHour.getUTCHours() + 1);
-        nextHour.setUTCMinutes(0, 0, 0); // Start of next hour
+        nextHour.setHours(nextHour.getHours() + 1);
+        nextHour.setMinutes(0, 0, 0); // Start of next local hour
         const nextHourTime = nextHour.getTime();
         const delay = Math.max(0, nextHourTime - Date.now());
 

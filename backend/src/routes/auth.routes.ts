@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { db } from '../prisma/db';
+import { db } from '../prisma/db.js';
 
 const router = Router();
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';

@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { db } from '../prisma/db';
-import { emailQueue } from '../services/queue.service';
-import { ensureAuthenticated } from '../middleware/auth.middleware';
-import { indexEmail, searchEmails } from '../services/elasticsearch.service';
+import { db } from '../prisma/db.js';
+import { emailQueue } from '../services/queue.service.js';
+import { ensureAuthenticated } from '../middleware/auth.middleware.js';
+import { indexEmail, searchEmails } from '../services/elasticsearch.service.js';
 
 const router = Router();
 

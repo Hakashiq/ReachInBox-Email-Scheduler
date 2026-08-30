@@ -23,7 +23,7 @@ redisConnection.on('error', (err) => {
 export const emailQueue = new Queue('emailQueue', {
   connection: redisConnection,
   defaultJobOptions: {
-    removeOnComplete: true, // Keep Redis clean
-    removeOnFail: false,    // Keep failed jobs for debugging/visibility
+    removeOnComplete: { count: 100 }, // Keep last 100 completed jobs visible for dashboard monitoring
+    removeOnFail: { count: 100 },     // Keep last 100 failed jobs for debugging/visibility
   },
 });

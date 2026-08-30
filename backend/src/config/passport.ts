@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { db } from '../prisma/db';
+import { db } from '../prisma/db.js';
 
 export function configurePassport() {
   passport.serializeUser((user: any, done) => {

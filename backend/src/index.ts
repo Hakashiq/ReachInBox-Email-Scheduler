@@ -3,17 +3,17 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
-import { configurePassport } from './config/passport';
-import authRoutes from './routes/auth.routes';
-import emailRoutes from './routes/email.routes';
-import slackRoutes from './routes/slack.routes';
-import { startWorker } from './services/worker.service';
-import { initializeElasticsearch } from './services/elasticsearch.service';
+import { configurePassport } from './config/passport.js';
+import authRoutes from './routes/auth.routes.js';
+import emailRoutes from './routes/email.routes.js';
+import slackRoutes from './routes/slack.routes.js';
+import { startWorker } from './services/worker.service.js';
+import { initializeElasticsearch } from './services/elasticsearch.service.js';
 import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { ExpressAdapter } from '@bull-board/express';
-import { emailQueue } from './services/queue.service';
-import { adminBasicAuth } from './middleware/auth.middleware';
+import { emailQueue } from './services/queue.service.js';
+import { adminBasicAuth } from './middleware/auth.middleware.js';
 
 dotenv.config();
 
