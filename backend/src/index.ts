@@ -40,6 +40,9 @@ app.use(
 
 app.use(express.json());
 
+// Trust proxy to allow secure cookies to be set behind Railway's reverse proxy
+app.set('trust proxy', 1);
+
 // Session middleware
 app.use(
   session({
@@ -47,7 +50,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
+      secure: true, // Must be true for sameSite: 'none'
+      sameSite: 'none', // Allow cookie sharing across different domains (Vercel and Railway)
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
     },
