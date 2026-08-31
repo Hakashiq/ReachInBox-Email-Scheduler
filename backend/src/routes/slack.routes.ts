@@ -152,9 +152,13 @@ router.get('/status', ensureAuthenticated, async (req: any, res) => {
     const userId = req.user.id;
     const integration = await db.orm.public.SlackIntegration.where({ userId }).first();
     
+    // Check if the default webhook is valid (must start with hooks.slack.com/services/)
+    const hasDefault = !!process.env.SLACK_WEBHOOK_URL && process.env.SLACK_WEBHOOK_URL.includes('hooks.slack.com/services/');
+
     return res.json({
       connected: !!integration && integration.isActive,
       webhookUrl: integration?.webhookUrl || null,
+      hasDefaultFallback: hasDefault,
     });
   } catch (err) {
     console.error('[Slack] Status check error:', err);

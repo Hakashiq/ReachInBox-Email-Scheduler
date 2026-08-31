@@ -81,12 +81,18 @@ async function triggerSlackNotification(
 ) {
   try {
     const slackConfig = await db.orm.public.SlackIntegration.where({ userId, isActive: true }).first();
-    if (!slackConfig) {
-      console.log(`[Worker] Slack limit hit for sender "${senderName}" but Slack is not connected. (Graceful no-op)`);
+    const webhookUrl = slackConfig?.webhookUrl || process.env.SLACK_WEBHOOK_URL;
+
+    // Validate webhook format
+    const isValidWebhook = !!webhookUrl && webhookUrl.includes('hooks.slack.com/services/');
+
+    if (!isValidWebhook) {
+      console.log(`[Worker] Slack limit hit for sender "${senderName}" but Slack is not connected and no valid system default webhook is set. (Graceful no-op)`);
       return;
     }
 
-    console.log(`[Worker] Rate limit breached! Triggering Slack notification for user ${userId}...`);
+    const isSystemFallback = !slackConfig || !slackConfig.isActive;
+    console.log(`[Worker] Rate limit breached! Triggering Slack notification (${isSystemFallback ? 'System Default Webhook' : 'User Custom Webhook'})...`);
     
     const nextSendInMins = Math.ceil((nextHourTime - Date.now()) / (1000 * 60));
 
@@ -95,7 +101,7 @@ async function triggerSlackNotification(
       text: `⚠️ *Hourly Rate Limit Exceeded*\n\nYou have reached your limit of ${limit} emails per hour. This email has been paused and automatically rescheduled for the next hourly window.\n\n*Held Recipient:*\n${recipientEmail}\n*Configured Limit:*\n${limit} emails/hr\n\n*Subject:*\n${subject}\n*Next Send In:*\n~${nextSendInMins} mins`,
     };
 
-    const response = await fetch(slackConfig.webhookUrl, {
+    const response = await fetch(webhookUrl!, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(message),

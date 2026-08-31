@@ -26,6 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ user, scheduledCount, sentCoun
   const [slackError, setSlackError] = useState('');
   const [slackSuccess, setSlackSuccess] = useState('');
   const [slackSaving, setSlackSaving] = useState(false);
+  const [hasDefaultFallback, setHasDefaultFallback] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -34,6 +35,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ user, scheduledCount, sentCoun
       const res = await api.getSlackStatus();
       setSlackConnected(res.connected);
       setSlackWebhook(res.webhookUrl || '');
+      setHasDefaultFallback(res.hasDefaultFallback || false);
     } catch (err) {
       console.error('Failed to load Slack integration status:', err);
     }
@@ -272,7 +274,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ user, scheduledCount, sentCoun
                   {slackConnected ? (
                     <div className="flex items-center gap-1.5 text-xs text-green-600 font-semibold bg-green-50 px-2 py-1 rounded border border-green-200">
                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping"></span>
-                      Connected to Slack
+                      Connected (Custom Webhook)
+                    </div>
+                  ) : hasDefaultFallback ? (
+                    <div className="flex items-center gap-1.5 text-xs text-[#006d38] font-semibold bg-[#E8F7EF] px-2 py-1 rounded border border-[#CDEED6]">
+                      <span className="w-1.5 h-1.5 bg-[#00A859] rounded-full animate-pulse"></span>
+                      Connected (System Default)
                     </div>
                   ) : (
                     <div className="text-xs text-on-surface-variant bg-gray-100 px-2 py-1 rounded border border-gray-200 text-center font-medium">

@@ -94,6 +94,28 @@ export const Compose: React.FC = () => {
     reader.readAsText(file);
   };
 
+  const applyFormat = (tag: string) => {
+    const textarea = document.getElementById('email-body-textarea') as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+    const selectedText = text.substring(start, end);
+
+    const replacement = `<${tag}>${selectedText}</${tag}>`;
+    const newBody = text.substring(0, start) + replacement + text.substring(end);
+    
+    setBody(newBody);
+
+    // Refocus and restore selection
+    setTimeout(() => {
+      textarea.focus();
+      const offset = tag.length + 2; // e.g. "<b>" is 3 characters
+      textarea.setSelectionRange(start + offset, start + offset + selectedText.length);
+    }, 10);
+  };
+
   const handleSendLater = async () => {
     if (!selectedSenderId) {
       setError('Please select a sender profile');
@@ -285,20 +307,21 @@ export const Compose: React.FC = () => {
               <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded"><span className="material-symbols-outlined text-[20px]">undo</span></button>
               <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded"><span className="material-symbols-outlined text-[20px]">redo</span></button>
               <div className="w-px h-4 bg-outline-variant mx-1"></div>
-              <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded font-bold">B</button>
-              <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded italic">I</button>
-              <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded underline">U</button>
+              <button type="button" onClick={() => applyFormat('b')} className="p-1.5 text-secondary hover:bg-surface-container-low rounded font-bold" title="Bold (Wrap with <b>)">B</button>
+              <button type="button" onClick={() => applyFormat('i')} className="p-1.5 text-secondary hover:bg-surface-container-low rounded italic" title="Italic (Wrap with <i>)">I</button>
+              <button type="button" onClick={() => applyFormat('u')} className="p-1.5 text-secondary hover:bg-surface-container-low rounded underline" title="Underline (Wrap with <u>)">U</button>
               <div className="w-px h-4 bg-outline-variant mx-1"></div>
               <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded"><span className="material-symbols-outlined text-[20px]">format_align_left</span></button>
-              <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded"><span className="material-symbols-outlined text-[20px]">format_list_bulleted</span></button>
+              <button type="button" onClick={() => applyFormat('li')} className="p-1.5 text-secondary hover:bg-surface-container-low rounded" title="List Item (Wrap with <li>)"><span className="material-symbols-outlined text-[20px]">format_list_bulleted</span></button>
               <button type="button" className="p-1.5 text-secondary hover:bg-surface-container-low rounded"><span className="material-symbols-outlined text-[20px]">insert_link</span></button>
             </div>
             
             {/* Textarea */}
             <div className="flex-1 p-6">
               <textarea 
+                id="email-body-textarea"
                 className="w-full h-full bg-transparent border-none resize-none focus:ring-0 font-body-sm text-body-sm text-on-surface placeholder-on-surface-variant/50 outline-none" 
-                placeholder="Type your email content html..."
+                placeholder="Type your email body here..."
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
               />

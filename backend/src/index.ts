@@ -74,6 +74,10 @@ createBullBoard({
   queues: [new BullMQAdapter(emailQueue)],
   serverAdapter: serverAdapter,
 });
+// Redirect /admin/queues to /admin/queues/ to ensure static assets load instantly from local memory
+app.get('/admin/queues', (req, res) => {
+  res.redirect('/admin/queues/');
+});
 app.use('/admin/queues', serverAdapter.getRouter());
 
 // Health Check
