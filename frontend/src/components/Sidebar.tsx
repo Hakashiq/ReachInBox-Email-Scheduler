@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { api } from '../services/api';
+import { api, API_BASE } from '../services/api';
 
 interface SidebarProps {
   user: {
@@ -204,7 +204,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ user, scheduledCount, sentCoun
 
         {/* Queue Monitor link (Visible to all users) */}
         <a 
-          href="http://localhost:5000/admin/queues"
+          href={`${API_BASE}/admin/queues`}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full text-left px-3 py-2 rounded-lg flex items-center gap-3 transition-colors duration-200 border-l-4 text-on-surface-variant border-transparent hover:bg-hover-tint"
